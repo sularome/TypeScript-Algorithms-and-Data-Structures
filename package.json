@@ -17,6 +17,14 @@
   },
   "homepage": "https://github.com/sularome/JavaScript-Algorithms",
   "devDependencies": {
-    "grunt": "1.0.1"
+    "grunt": "1.0.1",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-karma": "2.0.0",
+    "jasmine": "2.4.1",
+    "jasmine-core": "2.4.1",
+    "karma": "0.13.22",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-coverage": "1.0.0",
+    "karma-jasmine": "1.0.2"
   }
 }
