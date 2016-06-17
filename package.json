@@ -1,0 +1,22 @@
+{
+  "name": "JavaScript-Algorithms",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sularome/JavaScript-Algorithms.git"
+  },
+  "author": "Yordan Stoev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sularome/JavaScript-Algorithms/issues"
+  },
+  "homepage": "https://github.com/sularome/JavaScript-Algorithms",
+  "devDependencies": {
+    "grunt": "1.0.1"
+  }
+}
