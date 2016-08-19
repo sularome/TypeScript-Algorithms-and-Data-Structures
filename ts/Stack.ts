@@ -1,8 +1,6 @@
 class Stack<T> {
     protected stack:T[] = [];
 
-    constructor () { }
-
     public clear ():void {
         this.stack.length = 0;
     }
