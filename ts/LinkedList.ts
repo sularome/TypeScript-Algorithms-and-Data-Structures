@@ -17,46 +17,75 @@ class LinkedList<T> {
         this.head.next = this.tail;
     }
 
-    public push(value:T){
-        var newItem = LinkedList.newItem(this.tail.prev, this.tail, value);
-        this.tail.prev.next = newItem;
-        this.tail.prev = newItem;
-        this.length++;
+    public forEach(callback: (item: T, index:number, list:LinkedList<T>) => void, thisArg:any = null): void {
+        var currentItem = this.head.next;
+        var counter = 0;
+        while(currentItem !== this.tail) {
+            callback.call(thisArg, currentItem.value, counter, this);
+            counter++;
+            currentItem = currentItem.next;
+        }
     }
 
-    public pop(){
+    public isEmpty():boolean {
+        return this.head.next === this.tail;
+    }
+
+    public push(value:T): void {
+        this.addAfter(value, this.tail.prev);
+    }
+
+    public pop(): T{
         var currentItem = this.tail.prev;
         if(this.isEmpty()) {
             throw new Error(`The linked list is empty.`);
         }
-        currentItem.prev.next = currentItem.next;
-        currentItem.next.prev = currentItem.prev;
-        this.length--;
-
+        this.removeItem(currentItem);
         return currentItem.value;
     }
 
-    public isEmpty() {
-        return this.head.next === this.tail;
-    }
-
-    public remove(value:T){
+    public remove(value:T): void{
         var currentItem = this.search(value);
         if (currentItem) {
-            currentItem.prev.next = currentItem.next;
-            currentItem.next.prev = currentItem.prev;
-            this.length--;
+            this.removeItem(currentItem);
         } else {
             throw new Error(`Cannot remove the value ${value}, it's not present in the linked list.`);
         }
     }
 
-    private search(value:T){
-        var currentItem = this.head;
-        while(currentItem.next !== this.tail) {
+    public shift(): T{
+        var item = this.head.next;
+        if(this.isEmpty()) {
+            throw new Error(`The linked list is empty.`);
+        }
+        this.removeItem(item);
+        return item.value;
+    }
+
+    public unshift(value:T): void{
+        this.addAfter(value, this.head);
+    }
+
+    private addAfter(value:T, itemAfter:ILinkedListItem<T>): void{
+        var newItem = LinkedList.newItem(itemAfter, itemAfter.next, value);
+        itemAfter.next.prev = newItem;
+        itemAfter.next = newItem;
+        this.length++;
+    }
+
+    private removeItem(item:ILinkedListItem<T>): void{
+        item.prev.next = item.next;
+        item.next.prev = item.prev;
+        this.length--;
+    }
+
+    private search(value:T): ILinkedListItem<T>{
+        var currentItem = this.head.next;
+        while(currentItem !== this.tail) {
             if (value === currentItem.value) {
                 return currentItem;
             }
+            currentItem = currentItem.next;
         }
         return null;
     }

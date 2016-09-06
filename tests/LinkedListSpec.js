@@ -12,6 +12,19 @@ describe('LinkedList', function () {
         expect(list.length).toEqual(0);
     });
 
+    it('should be able to unshift items', function () {
+        var list = new LinkedList();
+        expect(list.length).toEqual(0);
+        list.unshift(1);
+        expect(list.length).toEqual(1);
+        list.unshift(1);
+        expect(list.length).toEqual(2);
+        list.shift();
+        expect(list.length).toEqual(1);
+        list.shift();
+        expect(list.length).toEqual(0);
+    });
+
     it('should be able to pop items', function () {
         var list = new LinkedList();
         expect(list.length).toEqual(0);
@@ -19,9 +32,9 @@ describe('LinkedList', function () {
         expect(list.length).toEqual(1);
         list.push(2);
         expect(list.length).toEqual(2);
-        expect(list.pop()).toEqual(1);
-        expect(list.length).toEqual(1);
         expect(list.pop()).toEqual(2);
+        expect(list.length).toEqual(1);
+        expect(list.pop()).toEqual(1);
         expect(list.length).toEqual(0);
     });
 
@@ -35,14 +48,14 @@ describe('LinkedList', function () {
 
     it('isEmpty should return true when there are no items in the list', function () {
         var list = new LinkedList();
-        expect(list.isEmpty()).toEqual(0);
+        expect(list.isEmpty()).toEqual(true);
         list.push(1);
         expect(list.length).toEqual(1);
         list.push(2);
         expect(list.length).toEqual(2);
-        expect(list.pop()).toEqual(1);
-        expect(list.length).toEqual(1);
         expect(list.pop()).toEqual(2);
+        expect(list.length).toEqual(1);
+        expect(list.pop()).toEqual(1);
         expect(list.isEmpty()).toEqual(true);
     });
 
