@@ -1,4 +1,4 @@
-fdescribe('Queue', function () {
+describe('Queue', function () {
     describe('enqueue', function () {
         it('should add elements to the stack', function () {
             var q = new TypedQueue(new Uint8Array(3));
