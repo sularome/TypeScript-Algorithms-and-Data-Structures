@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outFile": "src/tsc.js",
+    "sourceMap": false
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}
