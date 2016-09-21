@@ -1,4 +1,4 @@
-class BitSet {
+export class BitSet {
     private length:number = 0;
     private buffer:Uint32Array;
 

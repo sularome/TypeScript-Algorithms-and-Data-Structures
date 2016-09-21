@@ -1,4 +1,4 @@
-class Stack<T> {
+export class Stack<T> {
     protected stack:T[] = [];
 
     public clear ():void {

@@ -1,4 +1,4 @@
-class Queue<T> {
+export class Queue<T> {
     protected queue: T[] = [];
     protected head:number = 0;
     protected  MAX_QUEUE_SIZE = 1000;

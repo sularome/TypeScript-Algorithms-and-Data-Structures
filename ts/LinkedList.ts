@@ -1,15 +1,15 @@
 import {ILinkedListItem} from "./Interfaces/ILinkedListItem";
-class LinkedList<T> {
-    public head:ILinkedListItem<T> = LinkedList.emptyListItem();
+export class LinkedList<T> {
+    public head:ILinkedListItem<T> = LinkedList.emptyListItem<T>();
     public length:number = 0;
-    public tail:ILinkedListItem<T> = LinkedList.emptyListItem();
+    public tail:ILinkedListItem<T> = LinkedList.emptyListItem<T>();
 
-    public static emptyListItem<T> () {
-        return { prev:null, value:null, next:null };
+    public static emptyListItem<T> ():ILinkedListItem<T> {
+        return <ILinkedListItem<T>>({ prev:null, value:null, next:null });
     }
 
-    public static newItem<T> (prev:ILinkedListItem<T>, next:ILinkedListItem<T>, value: T) {
-        return { prev: prev, next: next, value: value };
+    public static newItem<T> (prev:ILinkedListItem<T>, next:ILinkedListItem<T>, value: T):ILinkedListItem<T> {
+        return <ILinkedListItem<T>>({ prev: prev, next: next, value: value });
     }
 
     constructor () {

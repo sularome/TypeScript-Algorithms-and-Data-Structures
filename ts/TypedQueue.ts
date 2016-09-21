@@ -1,5 +1,5 @@
 import {ITypedArray} from "./ITypedArray";
-class TypedQueue {
+export class TypedQueue {
     protected queue: ITypedArray;
     protected head:number = 0;
     protected tail:number = 0;
