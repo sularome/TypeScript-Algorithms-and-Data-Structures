@@ -5,22 +5,47 @@ export class ObjectArray {
     private columns:ITypedArray[] = [];
     private nameToColumn:{[key: string]: number} = {};
     private freePointer:number = 0;
-    private nextList:Float64Array;
+    private nextFreeList:Float64Array;
+    private properties: IObjectArrayProperty[];
 
     constructor (size:number, properties: IObjectArrayProperty[]) {
-        this.columns = properties.map(property => new property.type(size));
+        this.properties = properties;
+        this.columns = properties.map(property => {
+            var TypedArrayConstructor = property.type;
+            return new TypedArrayConstructor(size);
+        });
         properties.forEach((property, i) => this.nameToColumn[property.name] = i);
-        this.nextList = new Float64Array(Utils.range(1, size));
-        this.nextList[size - 1] = -1;
+        this.nextFreeList = new Float64Array(Utils.range(1, size));
+        this.nextFreeList[size - 1] = -1;
     }
 
     public push(obj:number[]) {
         var index:number = this.freePointer;
-        this.freePointer = this.nextList[this.freePointer];
+        this.freePointer = this.nextFreeList[this.freePointer];
+        this.nextFreeList[index] = -1;
         obj.forEach((value, columnIndex) => this.columns[columnIndex][index] = value);
+        return index;
+    }
+
+    public remove(index:number) {
+        var currentPointer:number = this.freePointer;
+        this.freePointer = index;
+        this.nextFreeList[this.freePointer] = currentPointer;
     }
 
     public get(index:number) {
+        if (this.nextFreeList[index] !== -1) {
+            return null;
+        }
         return this.columns.map(column => column[index]);
+    }
+
+    public getHash(index:number):any {
+        var output:any = {};
+        if (this.nextFreeList[index] !== -1) {
+            return null;
+        }
+        this.columns.map((column, columnIndex) => output[this.properties[columnIndex].name] = column[index]);
+        return output;
     }
 }

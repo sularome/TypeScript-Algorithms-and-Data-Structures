@@ -1,6 +1,13 @@
 describe('BitSet', function () {
+    beforeAll(function (done) {
+        System.import('BitSet').then((a) => {
+            this.BitSet = a.BitSet;
+            done();
+        });
+    });
+
     it('be able to set bits', function () {
-        var bs = new BitSet(100);
+        var bs = new this.BitSet(100);
         bs.set(1, true);
         bs.set(99, true);
         expect(bs.get(0)).toEqual(false);
@@ -10,7 +17,7 @@ describe('BitSet', function () {
     });
 
     it('be able to get set bits count', function () {
-        var bs = new BitSet(100);
+        var bs = new this.BitSet(100);
         bs.set(1, true);
         bs.set(99, true);
         expect(bs.count()).toEqual(2);
@@ -19,7 +26,7 @@ describe('BitSet', function () {
     });
 
     it('be able to get set bits count', function () {
-        var bs = new BitSet(100);
+        var bs = new this.BitSet(100);
         bs.set(1, true);
         bs.set(99, true);
         expect(bs.getIndexes()).toEqual([1,99]);

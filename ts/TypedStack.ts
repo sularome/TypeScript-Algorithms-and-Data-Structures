@@ -4,9 +4,9 @@ export class TypedStack {
     protected top:number = -1;
     protected max:number = -1;
 
-    constructor (stack:ITypedArray) {
-        this.stack = stack;
-        this.max = stack.length;
+    constructor (TypedArray: {new(size:number): ITypedArray}, size:number) {
+        this.stack = new TypedArray(size);
+        this.max = size;
     }
 
     public clear ():void {
