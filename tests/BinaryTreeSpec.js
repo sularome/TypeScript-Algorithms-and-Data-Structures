@@ -1,4 +1,4 @@
-fdescribe('BinaryTree', function () {
+describe('BinaryTree', function () {
     beforeAll(function (done) {
         System.import('BinaryTree').then((a) => {
             this.BinaryTree = a.BinaryTree;
