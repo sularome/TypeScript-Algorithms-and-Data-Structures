@@ -19,7 +19,7 @@ export class ObjectArray {
         this.nextFreeList[size - 1] = -1;
     }
 
-    public push(obj:number[]) {
+    public add(obj:number[]) {
         if(this.freePointer === -1) {
             throw new RangeError('Array size exceeded.');
         }
