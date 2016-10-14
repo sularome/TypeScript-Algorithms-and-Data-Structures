@@ -15,11 +15,14 @@ export class ObjectArray {
             return new TypedArrayConstructor(size);
         });
         properties.forEach((property, i) => this.nameToColumn[property.name] = i);
-        this.nextFreeList = new Float64Array(Utils.range(1, size));
+        this.nextFreeList = new Float64Array(Utils.range(1, size + 1));
         this.nextFreeList[size - 1] = -1;
     }
 
     public push(obj:number[]) {
+        if(this.freePointer === -1) {
+            throw new RangeError('Array size exceeded.');
+        }
         var index:number = this.freePointer;
         this.freePointer = this.nextFreeList[this.freePointer];
         this.nextFreeList[index] = -1;

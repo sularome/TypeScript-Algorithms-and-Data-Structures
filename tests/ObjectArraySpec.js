@@ -16,6 +16,13 @@ describe('ObjectArray', function () {
         expect(list.get(index)).toEqual([3,4,5]);
     });
 
+    it('should throw an error if we exceed array max size', function () {
+        var list = new this.ObjectArray(2, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
+        list.push([1,2,3]);
+        list.push([1,2,3]);
+        expect(list.push.bind(list)).toThrowError(RangeError);
+    });
+
     it('should be able to remove items', function () {
         var list = new this.ObjectArray(200, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
         var index = list.push([1,2,3]);
