@@ -13,8 +13,8 @@ module.exports = function(config) {
       }
     },
     coverageReporter: {
-        type : 'html',
-        dir : 'coverage/'
+        type : 'lcovonly',
+        dir : 'coverage/',
     },
 
     // frameworks to use
@@ -40,7 +40,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'grid.js': 'coverage'
+        './src/*.js': 'coverage'
     },
 
 
