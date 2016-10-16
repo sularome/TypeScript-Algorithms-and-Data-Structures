@@ -30,15 +30,29 @@ export class BinaryTree<T>{
         return this.comparator(node.value, value) ? node.left : node.right;
     }
 
-    public inorderTreeWalk(){
-        return this.inorderNodeWalk(this.root);
+    public reverseTreeWalk(callback: (pv:any, cv:T) => any, initialValue:any){
+        return this.reverseNodeWalk(this.root, callback, initialValue);
     }
 
-    public inorderNodeWalk(node:BinaryTreeNode<T>){
+    public inorderTreeWalk(callback: (pv:any, cv:T) => any, initialValue:any){
+        return this.inorderNodeWalk(this.root, callback, initialValue);
+    }
+
+    private inorderNodeWalk(node:BinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
         if(node) {
-            this.inorderNodeWalk(node.left);
-            console.log(node.value);
-            this.inorderNodeWalk(node.right);
+            this.inorderNodeWalk(node.left, callback, previousValue);
+            previousValue = callback(previousValue, node.value);
+            this.inorderNodeWalk(node.right, callback, previousValue);
+            return previousValue;
+        }
+    }
+
+    private reverseNodeWalk(node:BinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
+        if(node) {
+            this.reverseNodeWalk(node.right, callback, previousValue);
+            previousValue = callback(previousValue, node.value);
+            this.reverseNodeWalk(node.left, callback, previousValue);
+            return previousValue;
         }
     }
 }
