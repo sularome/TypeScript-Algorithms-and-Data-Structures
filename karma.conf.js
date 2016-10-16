@@ -15,6 +15,7 @@ module.exports = function(config) {
     coverageReporter: {
         type : 'lcovonly',
         dir : 'coverage/',
+        subdir: '.'
     },
 
     // frameworks to use
