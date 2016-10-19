@@ -11,8 +11,6 @@ before_install:
  - sudo apt-get install -y libappindicator1 fonts-liberation
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
-addons:
-   code_climate:
-     repo_token: 3274371322e89ea40869b2cd1f80602cca964f7891072a8e6651997b53c48fe7
 after_script:
+ - npm install -g codeclimate-test-reporter
  - codeclimate-test-reporter < ./coverage/lcov.info
