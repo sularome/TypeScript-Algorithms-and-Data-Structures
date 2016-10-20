@@ -5,6 +5,7 @@ describe('LinkedList', function () {
             done();
         });
     });
+
     it('should be able to push items', function () {
         var list = new this.LinkedList();
         expect(list.length).toEqual(0);
@@ -16,6 +17,17 @@ describe('LinkedList', function () {
         expect(list.length).toEqual(1);
         list.pop();
         expect(list.length).toEqual(0);
+    });
+
+    it('should be able to go through all elements using forEach', function () {
+        var list = new this.LinkedList();
+        list.push(1);
+        list.push(2);
+        list.push(3);
+        list.push(4);
+        list.forEach((el, index) => {
+            expect(el).toEqual(index + 1);
+        });
     });
 
     it('should be able to unshift items', function () {
