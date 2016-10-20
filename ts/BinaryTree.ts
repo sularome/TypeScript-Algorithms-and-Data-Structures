@@ -39,6 +39,22 @@ export class BinaryTree<T>{
         return currentNode;
     }
 
+    public max():BinaryTreeNode<T> {
+        var currentNode:BinaryTreeNode<T> = this.root;
+        while(currentNode.right) {
+            currentNode = currentNode.right;
+        }
+        return currentNode;
+    }
+
+    public min():BinaryTreeNode<T> {
+        var currentNode:BinaryTreeNode<T> = this.root;
+        while(currentNode.left) {
+            currentNode = currentNode.left;
+        }
+        return currentNode;
+    }
+
     private getNextChild(node:BinaryTreeNode<T>, value:T):BinaryTreeNode<T> {
         return this.comparator(node.value, value) ? node.left : node.right;
     }

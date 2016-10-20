@@ -91,7 +91,7 @@ describe('BinaryTree', function () {
             tree.add(5);
             expect(tree.search(5).value).toEqual(5);
             tree.add(6);
-            expect(tree.search(6).value).toEq6ual(6);
+            expect(tree.search(6).value).toEqual(6);
         });
 
         it('should return null when no element was found', function () {
@@ -101,5 +101,25 @@ describe('BinaryTree', function () {
             tree.add(6);
             expect(tree.search(16)).toBeNull();
         });
+    });
+
+    it('should be able to get max value', function () {
+        var tree = new this.BinaryTree(function (a,b) {return a > b;});
+        expect(tree.min().value).toBeNull();
+        tree.add(1);
+        tree.add(2);
+        tree.add(4);
+        tree.add(5);
+        expect(tree.min().value).toEqual(1);
+    });
+
+    it('should be able to get min value', function () {
+        var tree = new this.BinaryTree(function (a,b) {return a > b;});
+        expect(tree.max().value).toBeNull();
+        tree.add(1);
+        tree.add(2);
+        tree.add(4);
+        tree.add(5);
+        expect(tree.max().value).toEqual(5);
     });
 });
