@@ -122,4 +122,29 @@ describe('BinaryTree', function () {
         tree.add(5);
         expect(tree.max().value).toEqual(5);
     });
+
+    it('should be able to get node successor', function () {
+        var tree = new this.BinaryTree(function (a,b) {return a > b;});
+        tree.add(1);
+        tree.add(2);
+        tree.add(4);
+        tree.add(5);
+        expect(tree.sucessor(2).value).toEqual(4);
+    });
+
+    it('should return null for node successor if tree is empty', function () {
+        var tree = new this.BinaryTree(function (a,b) {return a > b;});
+        expect(tree.sucessor(2)).toBeNull();
+    });
+
+    it('should return null if there is no successor', function () {
+        var tree = new this.BinaryTree(function (a,b) {return a > b;});
+        tree.add(1);
+        expect(tree.sucessor(1)).toBeNull();
+        tree.add(2);
+        tree.add(4);
+        tree.add(5);
+        expect(tree.sucessor(5)).toBeNull();
+        expect(tree.sucessor(4).value).toEqual(5);
+    });
 });

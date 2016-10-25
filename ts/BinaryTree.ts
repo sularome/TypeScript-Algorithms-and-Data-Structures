@@ -41,22 +41,12 @@ export class BinaryTree<T>{
 
     public max():BinaryTreeNode<T> {
         var currentNode:BinaryTreeNode<T> = this.root;
-        while(currentNode.right) {
-            currentNode = currentNode.right;
-        }
-        return currentNode;
+        return currentNode.max();
     }
 
     public min():BinaryTreeNode<T> {
         var currentNode:BinaryTreeNode<T> = this.root;
-        while(currentNode.left) {
-            currentNode = currentNode.left;
-        }
-        return currentNode;
-    }
-
-    private getNextChild(node:BinaryTreeNode<T>, value:T):BinaryTreeNode<T> {
-        return this.comparator(node.value, value) ? node.left : node.right;
+        return currentNode.min();
     }
 
     public reverseTreeWalk(callback: (pv:any, cv:T) => any, initialValue:any){
@@ -65,6 +55,26 @@ export class BinaryTree<T>{
 
     public inorderTreeWalk(callback: (pv:any, cv:T) => any, initialValue:any){
         return this.inorderNodeWalk(this.root, callback, initialValue);
+    }
+
+    public sucessor (value:T) {
+        var node = this.search(value);
+        var ancestor:BinaryTreeNode<T> = null;
+        if(node === null || value === null) {
+            return null;
+        }
+        if(node.right !== null) {
+            return node.right.min();
+        }
+        while(ancestor !== null && ancestor.right === node) {
+            node = ancestor;
+            ancestor = node.parent;
+        }
+        return ancestor;
+    }
+
+    private getNextChild(node:BinaryTreeNode<T>, value:T):BinaryTreeNode<T> {
+        return this.comparator(node.value, value) ? node.left : node.right;
     }
 
     private inorderNodeWalk(node:BinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
@@ -95,5 +105,19 @@ export class BinaryTreeNode<T>{
     constructor(value:T, parent: BinaryTreeNode<T>) {
         this.value = value;
         this.parent = parent;
+    }
+
+    min ():BinaryTreeNode<T> {
+        if (this.left) {
+            return this.left.min();
+        }
+        return this;
+    }
+
+    max ():BinaryTreeNode<T> {
+        if (this.right) {
+            return this.right.max();
+        }
+        return this;
     }
 }
