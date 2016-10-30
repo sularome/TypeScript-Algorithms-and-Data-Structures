@@ -11,6 +11,8 @@ before_install:
  - sudo apt-get install -y libappindicator1 fonts-liberation
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
+ - npm install typings --global
+ - typings install
 after_script:
  - npm install -g codeclimate-test-reporter
  - codeclimate-test-reporter < ./coverage/lcov.info
