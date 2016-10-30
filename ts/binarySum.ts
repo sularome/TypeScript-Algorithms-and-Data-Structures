@@ -1,7 +1,7 @@
-function binarySum(A, B) {
-    var i = 0;
-    var n = A.length;
-    var C = [];
+function binarySum(A:number[], B:number[]) {
+    var i:number = 0;
+    var n:number = A.length;
+    var C:number[] = [];
     A = A.slice(0).reverse();
     B = B.slice(0).reverse();
     while (i < n) {
@@ -12,3 +12,5 @@ function binarySum(A, B) {
     }
     return C.reverse();
 }
+
+export default binarySum;

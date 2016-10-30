@@ -1,5 +1,5 @@
-function linearSearch (array, value) {
-    let index = null;
+function linearSearch (array:number[], value:number) {
+    let index:number = null;
     let counter = 0;
     const arraySize = array.length;
     while (counter < arraySize && index === null) {
@@ -10,3 +10,5 @@ function linearSearch (array, value) {
     }
     return index;
 }
+
+export default linearSearch;

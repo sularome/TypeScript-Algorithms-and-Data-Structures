@@ -1,4 +1,4 @@
-function insertionSort (array, reverse = false) {
+function insertionSort (array:number[], reverse = false) {
     if (!array || array.length < 2) {
         return array;
     }
@@ -15,3 +15,5 @@ function insertionSort (array, reverse = false) {
 
     return array;
 }
+
+export default insertionSort;

@@ -22,9 +22,9 @@
     "karma": "0.13.22",
     "karma-chrome-launcher": "1.0.1",
     "karma-coverage": "1.0.0",
-    "karma-jasmine": "1.0.2"
-  },
-  "dependencies": {
-    "typescript": "^1.8.10"
+    "karma-jasmine": "1.0.2",
+    "karma-requirejs": "1.1.0",
+    "requirejs": "2.3.2",
+    "typescript": "2.0.6"
   }
 }

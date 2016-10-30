@@ -1,13 +1,8 @@
+import {Stack} from "../ts/Stack";
 describe('Stack', function () {
-    beforeAll(function (done) {
-        System.import('TypedStack').then((a) => {
-            this.TypedStack = a.TypedStack;
-            done();
-        });
-    });
     describe('clear', function () {
         it('should remove all elements from the stack', function () {
-            var s = new this.TypedStack(Uint8Array, 8);
+            var s = new Stack();
             s.push(1);
             s.push(2);
             expect(s.size()).toEqual(2);
@@ -18,9 +13,10 @@ describe('Stack', function () {
             expect(s.isEmpty()).toEqual(true);
         });
     });
+
     describe('empty', function () {
         it('should return true if stack is empty', function () {
-            var s = new this.TypedStack(Uint8Array, 8);
+            var s = new Stack();
             expect(s.isEmpty()).toEqual(true);
             s.push(1);
             expect(s.isEmpty()).toEqual(false);
@@ -31,7 +27,7 @@ describe('Stack', function () {
 
     describe('search', function () {
         it('should return the index from the top of the element in the stack', function () {
-            var s = new this.TypedStack(Uint8Array, 8);
+            var s = new Stack();
             s.push(1);
             expect(s.search(1)).toEqual(0);
             s.push(2);
@@ -44,7 +40,7 @@ describe('Stack', function () {
 
     describe('peek', function () {
         it('should return the last element added to the stack', function () {
-            var s = new this.TypedStack(Uint8Array, 8);
+            var s = new Stack();
             s.push(1);
             expect(s.peek()).toEqual(1);
             s.push(2);
@@ -58,7 +54,7 @@ describe('Stack', function () {
 
     describe('pop', function () {
         it('should pop the last element added to the stack', function () {
-            var s = new this.TypedStack(Uint8Array, 8);
+            var s = new Stack();
             s.push(1);
             expect(s.pop()).toEqual(1);
             s.push(2);
@@ -71,18 +67,17 @@ describe('Stack', function () {
 
     describe('push', function () {
         it('should add element to the stack', function () {
-            var s = new this.TypedStack(Uint8Array, 3);
+            var s = new Stack();
             s.push(1);
             expect(s.size()).toEqual(1);
             s.push(1);
             expect(s.size()).toEqual(2);
-            expect(s.push).toThrow();
         });
     });
 
     describe('size', function () {
         it('should return the number of items on the stack', function () {
-            var s = new this.TypedStack(Uint8Array, 3);
+            var s = new Stack();
             s.push(1);
             expect(s.size()).toEqual(1);
             s.push(1);

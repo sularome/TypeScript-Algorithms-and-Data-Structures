@@ -1,5 +1,6 @@
 import {ITypedArray} from './ITypedArray';
 export class TypedStack {
+
     protected stack:ITypedArray;
     protected top:number = -1;
     protected max:number = -1;

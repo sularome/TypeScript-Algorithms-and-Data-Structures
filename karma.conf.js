@@ -20,16 +20,14 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'requirejs'],
 
 
     // list of files / patterns to load in the browser
     files: [
-		'https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.38/system.js',
-		'src/**/*.js',
-		'ts/**/*.js',
-		'tests/**/*.js',
-        { pattern: 'configs/*.json', watched: true, served: true, included: false }
+        {pattern: 'build/**/*.js', included: false},
+        {pattern: 'tests/test-main.js'}
+
     ],
 
 
@@ -37,11 +35,18 @@ module.exports = function(config) {
     exclude: [
     ],
 
+    plugins: [
+        'karma-coverage',
+        'karma-requirejs',
+        'karma-jasmine',
+        'karma-chrome-launcher'
+    ],
+
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        './src/*.js': 'coverage'
+        './build/**/*.js': 'coverage'
     },
 
 
@@ -61,7 +66,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_ERROR,
 
 
     // enable / disable watching file and executing tests whenever any file changes

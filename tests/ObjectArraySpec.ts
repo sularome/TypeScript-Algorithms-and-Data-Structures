@@ -1,13 +1,8 @@
+import {ObjectArray} from "../ts/ObjectArray";
 describe('ObjectArray', function () {
-    beforeAll(function (done) {
-        System.import('ObjectArray').then((a) => {
-            this.ObjectArray = a.ObjectArray;
-            done();
-        });
-    });
-
+    
     it('should be able to add items', function () {
-        var list = new this.ObjectArray(200, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
+        var list = new ObjectArray(200, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
         var index = list.add([1,2,3]);
         expect(list.get(index)).toEqual([1,2,3]);
         index = list.add([2,3,4]);
@@ -17,14 +12,14 @@ describe('ObjectArray', function () {
     });
 
     it('should throw an error if we exceed array max size', function () {
-        var list = new this.ObjectArray(2, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
+        var list = new ObjectArray(2, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
         list.add([1,2,3]);
         list.add([1,2,3]);
         expect(list.add.bind(list)).toThrowError(RangeError);
     });
 
     it('should be able to remove items', function () {
-        var list = new this.ObjectArray(200, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
+        var list = new ObjectArray(200, [{name:'prev', type:Float64Array}, {name:'next', type:Float64Array}, {name:'value', type:Float64Array}]);
         var index = list.add([1,2,3]);
         expect(list.get(index)).toEqual([1,2,3]);
         list.remove(index);

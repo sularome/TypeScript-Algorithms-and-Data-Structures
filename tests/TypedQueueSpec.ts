@@ -1,13 +1,8 @@
+import {TypedQueue} from "../ts/TypedQueue";
 describe('Queue', function () {
-    beforeAll(function (done) {
-        System.import('TypedQueue').then((a) => {
-            this.TypedQueue = a.TypedQueue;
-            done();
-        });
-    });
     describe('enqueue', function () {
         it('should add elements to the stack', function () {
-            var q = new this.TypedQueue(Uint8Array, 3);
+            var q = new TypedQueue(new Uint8Array(3));
             q.enqueue(1);
             expect(q.size()).toEqual(1);
             expect(q.peek()).toEqual(1);

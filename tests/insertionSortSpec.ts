@@ -1,3 +1,4 @@
+import insertionSort from "../ts/insertionSort";
 describe('Insertion sort', function () {
     it('should sort', function () {
         expect(insertionSort([1,4,2,3])).toEqual([1,2,3,4]);
