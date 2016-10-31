@@ -1,29 +1,38 @@
 export class BinaryTree<T>{
     public comparator:(a:T, b:T) => boolean;
-    public root:BinaryTreeNode<T> = new BinaryTreeNode<T>(null, null);
+    public root:BinaryTreeNode<T> = null;
 
-    constructor(comparator:(a:T, b:T) => boolean) {
+    constructor(comparator:(a:T, b:T) => boolean = (a,b) => a > b) {
         this.comparator = comparator;
     }
 
     public add(value:T) {
-        if(this.root.value === null) {
-            this.root.value = value;
-        } else {
-            let parent: BinaryTreeNode<T> = this.root;
-            let childNode: BinaryTreeNode<T> = this.getNextChild(parent, value);
-
-            while (childNode) {
-                parent = childNode;
-                childNode = this.getNextChild(parent, value);
-            }
-
-            if (this.comparator(parent.value, value)) {
-                parent.left = new BinaryTreeNode<T>(value, parent);
-            } else {
-                parent.right = new BinaryTreeNode<T>(value, parent);
+        var currentNode:BinaryTreeNode<T> = this.root;
+        var futureParent:BinaryTreeNode<T> = null;
+        var newNode:BinaryTreeNode<T> = new BinaryTreeNode(value, null);
+        while (currentNode !== null) {
+            futureParent = currentNode;
+            if (futureParent !== null) {
+                if (this.comparator(futureParent.value, value)) {
+                    currentNode = futureParent.left;
+                } else {
+                    currentNode = futureParent.right;
+                }
             }
         }
+
+        newNode.parent = futureParent;
+        if (futureParent === null) {
+            this.root = newNode;
+        } else if (this.comparator(futureParent.value, value)) {
+            futureParent.left = newNode;
+        } else {
+            futureParent.right = newNode;
+        }
+    }
+
+    public isEmpty() {
+        return this.root === null;
     }
 
     public search(value:T) {
@@ -39,13 +48,40 @@ export class BinaryTree<T>{
         return currentNode;
     }
 
+    public delete(value:T) {
+        var node:BinaryTreeNode<T> = this.search(value);
+        if (node === null) {
+            return false;
+        }
+        
+        if (!node.hasLeftChild()) {
+            this.transplant(node, node.right);
+        } else if (!node.hasRightChild()) {
+            this.transplant(node, node.left);
+        } else {
+            let successor = node.right.min();
+            if (successor !== node.right) {
+                this.transplant(successor, successor.right);
+                successor.right = node.right;
+                successor.right.parent = successor;
+            }
+            this.transplant(node, successor);
+        }
+    }
+
     public max():BinaryTreeNode<T> {
         var currentNode:BinaryTreeNode<T> = this.root;
+        if(this.isEmpty()) {
+            return null;
+        }
         return currentNode.max();
     }
 
     public min():BinaryTreeNode<T> {
         var currentNode:BinaryTreeNode<T> = this.root;
+        if(this.isEmpty()) {
+            return null;
+        }
         return currentNode.min();
     }
 
@@ -78,20 +114,37 @@ export class BinaryTree<T>{
     }
 
     private inorderNodeWalk(node:BinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
-        if(node) {
-            this.inorderNodeWalk(node.left, callback, previousValue);
+        if(node !== null) {
+            previousValue = this.inorderNodeWalk(node.left, callback, previousValue);
             previousValue = callback(previousValue, node.value);
-            this.inorderNodeWalk(node.right, callback, previousValue);
+            previousValue = this.inorderNodeWalk(node.right, callback, previousValue);
+            return previousValue;
+        } else {
             return previousValue;
         }
     }
 
     private reverseNodeWalk(node:BinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
-        if(node) {
-            this.reverseNodeWalk(node.right, callback, previousValue);
+        if(node !== null) {
+            previousValue = this.reverseNodeWalk(node.right, callback, previousValue);
             previousValue = callback(previousValue, node.value);
-            this.reverseNodeWalk(node.left, callback, previousValue);
+            previousValue = this.reverseNodeWalk(node.left, callback, previousValue);
             return previousValue;
+        } else {
+            return previousValue;
+        }
+    }
+
+    private transplant(node: BinaryTreeNode<T>, newNode: BinaryTreeNode<T>) {
+        if(node.isRoot()) {
+            this.root = newNode;
+        } else if (node.isLeftChild()) {
+            node.parent.left = newNode;
+        } else {
+            node.parent.right = newNode;
+        }
+        if (newNode !== null) {
+            newNode.parent === node.parent;
         }
     }
 }
@@ -107,15 +160,35 @@ export class BinaryTreeNode<T>{
         this.parent = parent;
     }
 
-    min ():BinaryTreeNode<T> {
-        if (this.left) {
+    public hasLeftChild ():boolean {
+        return this.left !== null;
+    }
+
+    public hasRightChild ():boolean {
+        return this.right !== null;
+    }
+
+    public isLeftChild ():boolean {
+        return this.parent && this.parent.left === this;
+    }
+
+    public isRightChild ():boolean {
+        return this.parent && this.parent.right === this;
+    }
+
+    public isRoot ():boolean {
+        return this.parent === null;
+    }
+
+    public min ():BinaryTreeNode<T> {
+        if (this.left !== null) {
             return this.left.min();
         }
         return this;
     }
 
-    max ():BinaryTreeNode<T> {
-        if (this.right) {
+    public max ():BinaryTreeNode<T> {
+        if (this.right !== null) {
             return this.right.max();
         }
         return this;
