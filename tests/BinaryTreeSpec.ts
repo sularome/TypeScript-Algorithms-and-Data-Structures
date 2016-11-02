@@ -135,6 +135,16 @@ describe('BinaryTree', function () {
         expect(tree.sucessor(2).value).toEqual(4);
     });
 
+    it('should be able to get node successor when it doesn\'t have right child', function () {
+        var tree = new BinaryTree<number>(function (a,b) {return a > b;});
+        tree.add(1);
+        tree.add(10);
+        tree.add(9);
+        tree.add(8);
+        expect(tree.sucessor(8).value).toEqual(9);
+        expect(tree.sucessor(9).value).toEqual(10);
+    });
+
     it('should return null for node successor if tree is empty', function () {
         var tree = new BinaryTree<number>(function (a,b) {return a > b;});
         expect(tree.sucessor(2)).toBeNull();
