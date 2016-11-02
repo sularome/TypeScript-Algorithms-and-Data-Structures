@@ -102,15 +102,12 @@ export class BinaryTree<T>{
         if(node.right !== null) {
             return node.right.min();
         }
+        ancestor = node.parent;
         while(ancestor !== null && ancestor.right === node) {
             node = ancestor;
             ancestor = node.parent;
         }
         return ancestor;
-    }
-
-    private getNextChild(node:BinaryTreeNode<T>, value:T):BinaryTreeNode<T> {
-        return this.comparator(node.value, value) ? node.left : node.right;
     }
 
     private inorderNodeWalk(node:BinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
