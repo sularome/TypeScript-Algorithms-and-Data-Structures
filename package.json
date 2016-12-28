@@ -25,6 +25,6 @@
     "karma-jasmine": "1.0.2",
     "karma-requirejs": "1.1.0",
     "requirejs": "2.3.2",
-    "typescript": "2.0.6"
+    "typescript": "2.1.4"
   }
 }
