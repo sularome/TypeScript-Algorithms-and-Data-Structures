@@ -1,19 +1,19 @@
 import IBinaryTree from "../Interfaces/IBinaryTree";
 import {IBinaryTreeNode} from "../Interfaces/IBinaryTreeNode";
 import {BinaryTreeNode} from "./BinaryTreeNode";
-export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>>{
+export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>> {
 
-    public comparator:(a:T, b:T) => boolean;
-    public root:IBinaryTreeNode<T> = null;
+    public comparator: (a: T, b: T) => boolean;
+    public root: IBinaryTreeNode<T> = null;
 
-    constructor(comparator:(a:T, b:T) => boolean = (a,b) => a > b) {
+    constructor(comparator: (a: T, b: T) => boolean = (a, b) => a > b) {
         this.comparator = comparator;
     }
 
-    public add(value:T):void {
-        let currentNode:IBinaryTreeNode<T> = this.root;
-        let futureParent:IBinaryTreeNode<T> = null;
-        const newNode:IBinaryTreeNode<T> = new BinaryTreeNode(value, null);
+    public add(value: T): void {
+        let currentNode: IBinaryTreeNode<T> = this.root;
+        let futureParent: IBinaryTreeNode<T> = null;
+        const newNode: IBinaryTreeNode<T> = new BinaryTreeNode(value, null);
         while (currentNode !== null) {
             futureParent = currentNode;
             if (futureParent !== null) {
@@ -35,8 +35,8 @@ export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>>{
         }
     }
 
-    public delete(value:T) {
-        let node:IBinaryTreeNode<T> = this.search(value);
+    public remove(value: T) {
+        let node: IBinaryTreeNode<T> = this.search(value);
         if (node === null) {
             return false;
         }
@@ -56,7 +56,7 @@ export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>>{
         }
     }
 
-    public inorderTreeWalk(callback: (pv:any, cv:T) => any, initialValue:any){
+    public inOrderTreeWalk(callback: (pv: any, cv: T) => any, initialValue: any) {
         return this.inorderNodeWalk(this.root, callback, initialValue);
     }
 
@@ -64,29 +64,29 @@ export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>>{
         return this.root === null;
     }
 
-    public max():IBinaryTreeNode<T> {
-        const currentNode:IBinaryTreeNode<T> = this.root;
-        if(this.isEmpty()) {
+    public max(): IBinaryTreeNode<T> {
+        const currentNode: IBinaryTreeNode<T> = this.root;
+        if (this.isEmpty()) {
             return null;
         }
         return currentNode.max();
     }
 
-    public min():IBinaryTreeNode<T> {
-        const currentNode:IBinaryTreeNode<T> = this.root;
-        if(this.isEmpty()) {
-            return null;
+    public min(): IBinaryTreeNode<T> {
+        const currentNode: IBinaryTreeNode<T> = this.root;
+        if (this.isEmpty()) {
+             return null;
         }
         return currentNode.min();
     }
 
-    public reverseTreeWalk(callback: (pv:any, cv:T) => any, initialValue:any){
+    public reverseTreeWalk(callback: (pv: any, cv: T) => any, initialValue: any) {
         return this.reverseNodeWalk(this.root, callback, initialValue);
     }
 
-    public search(value:T) {
-        let currentNode:IBinaryTreeNode<T> = this.root;
-        while(currentNode && currentNode.value !== value) {
+    public search(value: T) {
+        let currentNode: IBinaryTreeNode<T> = this.root;
+        while (currentNode && currentNode.value !== value) {
             if (this.comparator(currentNode.value, value)) {
                 currentNode = currentNode.left;
             } else {
@@ -97,25 +97,25 @@ export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>>{
         return currentNode;
     }
 
-    public successor (value:T) {
+    public successor (value: T) {
         let node = this.search(value);
-        let ancestor:IBinaryTreeNode<T>;
-        if(node === null || value === null) {
+        let ancestor: IBinaryTreeNode<T>;
+        if (node === null || value === null) {
             return null;
         }
-        if(node.right !== null) {
+        if (node.right !== null) {
             return node.right.min();
         }
         ancestor = node.parent;
-        while(ancestor !== null && ancestor.right === node) {
+        while (ancestor !== null && ancestor.right === node) {
             node = ancestor;
             ancestor = node.parent;
         }
         return ancestor;
     }
 
-    private inorderNodeWalk(node:IBinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
-        if(node !== null) {
+    private inorderNodeWalk(node: IBinaryTreeNode<T>, callback: (pv: any, cv: T) => any, previousValue: any) {
+        if (node !== null) {
             previousValue = this.inorderNodeWalk(node.left, callback, previousValue);
             previousValue = callback(previousValue, node.value);
             previousValue = this.inorderNodeWalk(node.right, callback, previousValue);
@@ -125,8 +125,8 @@ export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>>{
         }
     }
 
-    private reverseNodeWalk(node:IBinaryTreeNode<T>, callback: (pv:any, cv:T) => any, previousValue:any){
-        if(node !== null) {
+    private reverseNodeWalk(node: IBinaryTreeNode<T>, callback: (pv: any, cv: T) => any, previousValue: any) {
+        if (node !== null) {
             previousValue = this.reverseNodeWalk(node.right, callback, previousValue);
             previousValue = callback(previousValue, node.value);
             previousValue = this.reverseNodeWalk(node.left, callback, previousValue);
@@ -137,7 +137,7 @@ export class BinaryTree<T> implements IBinaryTree<T, IBinaryTreeNode<T>>{
     }
 
     private transplant(node: IBinaryTreeNode<T>, newNode: IBinaryTreeNode<T>) {
-        if(node.isRoot()) {
+        if (node.isRoot()) {
             this.root = newNode;
         } else if (node.isLeftChild()) {
             node.parent.left = newNode;
