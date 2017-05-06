@@ -1,10 +1,10 @@
-// TODO: getWordsFromPrefix
+// TODO: add delete and getWordsFromPrefix
 
-export class Trie<T> {
+export class TrieWithValue<T> {
     public static KEY: string = "id";
     public root: any = {};
 
-    public insert(word: string): boolean {
+    public insert(word: string, value: T = null): boolean {
         const wordwSize = word.length;
         let i: number = 0;
         let level = this.root;
@@ -15,7 +15,7 @@ export class Trie<T> {
             level = level[word[i]];
             i++;
             if (i === wordwSize) {
-                level[Trie.KEY] =  true;
+                level[TrieWithValue.KEY] =  value;
             }
         }
         return true;
@@ -31,11 +31,28 @@ export class Trie<T> {
             }
             level = level[word[i]];
             i++;
-            if (i === wordwSize && level[Trie.KEY]) {
+            if (i === wordwSize && level.hasOwnProperty(TrieWithValue.KEY)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public getValue = function(word: string) {
+        const wordwSize = word.length;
+        let i: number = 0;
+        let level = this.root;
+        while (i < wordwSize) {
+            if (!level[word[i]]) {
+                return void 0;
+            }
+            level = level[word[i]];
+            i++;
+            if (i === wordwSize && level.hasOwnProperty(TrieWithValue.KEY)) {
+                return level[TrieWithValue.KEY];
+            }
+        }
+        return void 0;
     }
 }
 
