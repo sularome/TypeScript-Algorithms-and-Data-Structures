@@ -2,9 +2,7 @@ import {RadixTreeNode} from "./RadixTreeNode";
 export class RadixTree<T> {
     private root: RadixTreeNode<T> = new RadixTreeNode("", null);
 
-    constructor () {
-
-    }
+    constructor () { }
 
     insert(word: string, value: T) {
         let currentNode: RadixTreeNode<T> = this.root;
@@ -22,11 +20,10 @@ export class RadixTree<T> {
                     if (nodeToBeSplitted === null) {
                         currentNode.addChild(new RadixTreeNode(sufix, value));
                     } else {
-                        const commonPrefix: string = nodeToBeSplitted.getCommonPrefix(sufix);
-                        nodeToBeSplitted.addChild(new RadixTreeNode(nodeToBeSplitted.word.substr(commonPrefix.length), nodeToBeSplitted.value));
-                        nodeToBeSplitted.addChild(new RadixTreeNode(sufix.substr(commonPrefix.length), value));
-                        nodeToBeSplitted.word = commonPrefix;
-                        nodeToBeSplitted.value = null;
+                        nodeToBeSplitted.splitNode(sufix);
+                        currentNode = nodeToBeSplitted;
+                        cumulatedWord += nodeToBeSplitted.word;
+                        continue;
                     }
                 }
                 break;
@@ -43,6 +40,24 @@ export class RadixTree<T> {
         let cumulatedWord: string = "";
 
         while (currentNode !== null && !currentNode.isLeaf() && cumulatedWord.length <= word.length) {
+
+            const sufix: string = word.substr(cumulatedWord.length);
+            const nextNode: RadixTreeNode<T> = currentNode.selectNextNodeFromPrefix(sufix);
+            if (nextNode !== null) {
+                currentNode = nextNode;
+                cumulatedWord += nextNode.word;
+            } else {
+                currentNode = null;
+            }
+        }
+        return (currentNode !== null && currentNode.isLeaf() && cumulatedWord.length === word.length);
+    }
+
+    get(word: string) {
+        let currentNode: RadixTreeNode<T> = this.root;
+        let cumulatedWord: string = "";
+
+        while (currentNode !== null && !currentNode.isLeaf() && cumulatedWord.length <= word.length) {
             const sufix: string = word.substr(cumulatedWord.length);
             const nextNode: RadixTreeNode<T> = currentNode.selectNextNodeFromPrefix(sufix);
 
@@ -53,6 +68,10 @@ export class RadixTree<T> {
                 currentNode = null;
             }
         }
-        return (currentNode !== null && currentNode.isLeaf() && cumulatedWord.length === word.length);
+        if (currentNode !== null && currentNode.isLeaf() && cumulatedWord.length === word.length) {
+            return currentNode.value;
+        } else {
+            return null;
+        }
     }
 }

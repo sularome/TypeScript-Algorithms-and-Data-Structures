@@ -23,6 +23,7 @@ export class RadixTreeNode<T> {
         }
         return partialMatch[0]
     }
+
     public getCommonPrefix(prefix: string): string {
         let i = 0;
         let commonPrefix = "";
@@ -33,10 +34,17 @@ export class RadixTreeNode<T> {
         return commonPrefix;
     }
 
+    public splitNode(sufix: string): void {
+        const commonPrefix: string = this.getCommonPrefix(sufix);
+        const currentChildren = this.children.slice(0);
+        const newNode = new RadixTreeNode(this.word.substr(commonPrefix.length), this.value);
+        currentChildren.forEach(newNode.addChild, newNode);
+        this.word = commonPrefix;
+        this.value = null;
+        this.children = [newNode];
+    }
+
     public selectNextNodeFromPrefix(prefix: string): RadixTreeNode<T> {
-        let candidates: RadixTreeNode<T>[] = this.children;
-        let resultNode: RadixTreeNode<T> = null;
-        let prefixSize: number = 0;
         const exactMatch: RadixTreeNode<T>[] = this.children.filter(node => node.word === prefix);
         if (exactMatch.length === 1) {
             return exactMatch[0];
@@ -51,15 +59,5 @@ export class RadixTreeNode<T> {
             return null;
         }
         return partialMatch[0];
-    }
-
-    private getLongestCommonString(comparedWord: string): string {
-        let commonString: string = "";
-        let i: number = 0;
-        let length: number = Math.min(this.word.length, comparedWord.length);
-        while ( i < length && comparedWord[i] === this.word[i]) {
-            i++;
-        }
-        return comparedWord.substr(0, i);
     }
 }

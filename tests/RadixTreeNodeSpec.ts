@@ -52,4 +52,20 @@ describe("RadixTreeNode", function () {
         node.addChild(new RadixTreeNode("", 2));
         expect(node.selectNextNodeFromPrefix("tes")).toBeNull();
     });
+
+    describe("getCommonPrefix", function () {
+        it("should return empty string if no common prefix", function () {
+            const node: RadixTreeNode<number> = new RadixTreeNode("test", null);
+            expect(node.getCommonPrefix("ars")).toEqual("");
+        });
+        it("should return common prefix", function () {
+            const node: RadixTreeNode<number> = new RadixTreeNode("test", null);
+            expect(node.getCommonPrefix("tes")).toEqual("tes");
+            expect(node.getCommonPrefix("ter")).toEqual("te");
+        });
+        it("should return empty string if looking for empty string", function () {
+            const node: RadixTreeNode<number> = new RadixTreeNode("test", null);
+            expect(node.getCommonPrefix("")).toEqual("");
+        });
+    });
 });
