@@ -60,6 +60,28 @@ export class BitArray implements IBitArray {
         return this.length;
     }
 
+    public splice(startIndex: number, deleteCount: number): void {
+        if (isNaN(deleteCount) || deleteCount < 1) {
+            return;
+        }
+        if (startIndex < 0) {
+            startIndex = this.length + startIndex;
+            if (startIndex < 0) {
+                throw new RangeError(`${startIndex} is less than 0`)
+            }
+        } else if (startIndex >= this.length) {
+            throw new RangeError(`${startIndex} exceeds the array size ${this.length}`)
+        }
+
+        const tempBuffer: number[] = this.getIndexes()
+            .filter(index => index < startIndex || index >= startIndex + deleteCount)
+            .map(index => index >= startIndex + deleteCount ? index - deleteCount : index);
+        this.reset();
+        this.resize(this.length - deleteCount);
+        tempBuffer.forEach(id => this.set(id, true));
+
+    }
+
     public set(index: number, value: boolean) {
         this.validateIndex(index);
         const chunkOffset = Math.floor(index / 32);
