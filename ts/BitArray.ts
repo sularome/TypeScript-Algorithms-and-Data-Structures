@@ -1,5 +1,5 @@
-import {IBitSet} from "./Interfaces/IBitSet";
-export class BitSet implements IBitSet {
+import {IBitArray} from "./Interfaces/IBitArray";
+export class BitArray implements IBitArray {
     private length: number = 0;
     private buffer: Uint32Array;
 
@@ -33,12 +33,12 @@ export class BitSet implements IBitSet {
         return result;
     }
 
-    public reset(): BitSet {
+    public reset(): BitArray {
         this.buffer.fill(0);
         return this;
     }
 
-    public resize(newSize: number): BitSet {
+    public resize(newSize: number): BitArray {
         if (newSize < 0) {
             throw new RangeError(`Invalid new BitSet size ${newSize}`)
         }

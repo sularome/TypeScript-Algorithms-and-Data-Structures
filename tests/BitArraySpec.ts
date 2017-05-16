@@ -1,8 +1,8 @@
-import {BitSet} from "../ts/BitSet";
+import {BitArray} from "../ts/BitArray";
 
-describe("BitSet", function () {
+describe("BitArray", function () {
     it("be able to set bits", function () {
-        const bs = new BitSet(100);
+        const bs = new BitArray(100);
         bs.set(1, true);
         bs.set(99, true);
         expect(bs.get(0)).toEqual(false);
@@ -12,7 +12,7 @@ describe("BitSet", function () {
     });
 
     it("be able to get set bits count", function () {
-        const bs = new BitSet(100);
+        const bs = new BitArray(100);
         bs.set(1, true);
         bs.set(99, true);
         expect(bs.count()).toEqual(2);
@@ -21,7 +21,7 @@ describe("BitSet", function () {
     });
 
     it("be able to get set bits count", function () {
-        const bs = new BitSet(100);
+        const bs = new BitArray(100);
         bs.set(1, true);
         bs.set(99, true);
         expect(bs.getIndexes()).toEqual([1, 99]);
@@ -32,7 +32,7 @@ describe("BitSet", function () {
     });
 
     it("should throw error if trying to set bit out of bounds", function () {
-        const bs = new BitSet(100);
+        const bs = new BitArray(100);
         expect(() => bs.set(1, true)).not.toThrowError();
         expect(() => bs.set(100, true)).toThrowError();
         expect(() => bs.set(101, true)).toThrowError();
@@ -40,7 +40,7 @@ describe("BitSet", function () {
     });
 
     it("should be able to zero all values", function () {
-        const bs = new BitSet(100);
+        const bs = new BitArray(100);
         bs.set(1, true);
         bs.set(99, true);
         expect(bs.get(0)).toEqual(false);
@@ -55,8 +55,8 @@ describe("BitSet", function () {
     });
 
     describe("resize", function () {
-        it("should be able to extend the BitSet", function () {
-            const bs = new BitSet(100);
+        it("should be able to extend the BitArray", function () {
+            const bs = new BitArray(100);
             bs.set(1, true);
             bs.set(2, true);
             bs.set(99, true);
@@ -69,8 +69,8 @@ describe("BitSet", function () {
             expect(bs.get(301)).toEqual(true);
         });
 
-        it("should be able to shrink the BitSet", function () {
-            const bs = new BitSet(100);
+        it("should be able to shrink the BitArray", function () {
+            const bs = new BitArray(100);
             bs.set(1, true);
             bs.set(2, true);
             bs.set(99, true);
@@ -83,7 +83,7 @@ describe("BitSet", function () {
         });
 
         it("nothing should be affected if the size doesn't change", function () {
-            const bs = new BitSet(100);
+            const bs = new BitArray(100);
             bs.set(1, true);
             bs.set(2, true);
             bs.set(99, true);
@@ -95,7 +95,7 @@ describe("BitSet", function () {
         });
 
         it("should throw error if index is invalid", function () {
-            const bs = new BitSet(100);
+            const bs = new BitArray(100);
             expect(() => bs.resize(-1)).toThrowError();
         });
     });

@@ -1,12 +1,11 @@
-import {IKeyValuePair} from "../Interfaces/IKeyValuePair";
-import {BitSet} from "../BitSet";
-import {IBitSet} from "../Interfaces/IBitSet";
+import {BitArray} from "../BitArray";
+import {IBitArray} from "../Interfaces/IBitArray";
 
 export class DirectedAdjacencyMatrixGraph <T> {
     private hashFunction: (node: T) => string = (a: T) => a.toString();
     private vertices: {[name: string]: number} = {};
     private edgeToVertexMap: T[] = [];
-    private edges: IBitSet[] = [];
+    private edges: IBitArray[] = [];
 
     constructor (hashFunction?: (node: T) => string) {
         this.hashFunction = hashFunction || this.hashFunction;
@@ -24,7 +23,7 @@ export class DirectedAdjacencyMatrixGraph <T> {
     public addNode (node: T): DirectedAdjacencyMatrixGraph<T> {
         this.edgeToVertexMap.push(node);
         this.vertices[this.hashFunction(node)] = this.edges.length;
-        this.edges.push(new BitSet(this.edges.length + 1));
+        this.edges.push(new BitArray(this.edges.length + 1));
         this.edges.forEach(row => row.resize(row.size() + 1));
         return this;
     }
