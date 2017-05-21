@@ -188,4 +188,57 @@ describe("BitMatrix", function () {
             expect(() => bm.spliceColumn(-101, 2)).toThrowError();
         });
     });
+
+
+    describe("splice row", function () {
+        it("should remove number of elements", function () {
+            const bs = new BitMatrix(100, 100);
+            bs.set(1, 1, true);
+            bs.set(2, 1, true);
+            bs.set(5, 1, true);
+            bs.set(6, 1, true);
+            bs.set(99, 1,  true);
+            bs.spliceRow(2, 3);
+            expect(bs.size()).toEqual([97, 100]);
+            expect(bs.get( 1, 1)).toEqual(true);
+            expect(bs.get( 2, 1)).toEqual(true);
+            expect(bs.get( 3, 1)).toEqual(true);
+            expect(bs.get( 5, 1)).toEqual(false);
+            expect(bs.get( 96, 1)).toEqual(true);
+        });
+
+        it("should be able to provide negative start index", function () {
+            const bs = new BitMatrix(100, 100);
+            bs.set(1, 1, true);
+            bs.set(2, 1, true);
+            bs.set(5, 1, true);
+            bs.set(6, 1, true);
+            bs.set(99, 1, true);
+            bs.spliceRow(-98, 3);
+            expect(bs.size()).toEqual([97, 100]);
+            expect(bs.get( 1, 1)).toEqual(true);
+            expect(bs.get( 2, 1)).toEqual(true);
+            expect(bs.get( 3, 1)).toEqual(true);
+            expect(bs.get( 5, 1)).toEqual(false);
+            expect(bs.get( 96, 1)).toEqual(true);
+        });
+
+        it("delete is NaN or less than 1 do nothing", function () {
+            const bm = new BitMatrix(100, 100);
+            bm.spliceRow(-98, -3);
+            expect(bm.size()).toEqual([100, 100]);
+            bm.spliceRow(-98, Number.NaN);
+            expect(bm.size()).toEqual([100, 100]);
+        });
+
+        it("should throw error if start index is greater than array length", function () {
+            const bm = new BitMatrix(100, 100);
+            expect(() => bm.spliceRow(101, 2)).toThrowError();
+        });
+
+        it("should splice from 0 if negative value passed and it is greater than array length by abs value", function () {
+            const bm = new BitMatrix(100, 100);
+            expect(() => bm.spliceRow(-101, 2)).toThrowError();
+        });
+    });
 });

@@ -111,7 +111,7 @@ export class BitMatrix implements IBitMatrix {
 
         const tempBuffer: number[][] = this.getIndexes().filter((setIds, row) => row < startIndex || row >= startIndex + deleteCount);
         this.reset();
-        this.resize(this.rowCount, this.colCount - deleteCount);
+        this.resize(this.rowCount - deleteCount, this.colCount);
         tempBuffer.forEach((indexes, row) => {
             indexes.forEach(id => {
                 this.set(row, id, true);
