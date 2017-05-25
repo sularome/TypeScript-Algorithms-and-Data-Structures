@@ -10,6 +10,12 @@ export class BitMatrix implements IBitMatrix {
         this.buffer = new Uint32Array(this.calculateBufferSize(this.colCount * this.rowCount));
     }
 
+    public clone(): IBitMatrix {
+        const clone = new BitMatrix(this.rowCount, this.colCount);
+        clone.setBuffer(this.buffer.slice(0));
+        return clone;
+    }
+
     public count(): number {
         return this.buffer.reduce((total, chunk) => this.bitsCountInNumber(chunk) + total, 0);
     }
@@ -44,22 +50,19 @@ export class BitMatrix implements IBitMatrix {
         return output;
     }
 
-    public getIndexes(): number[][] {
+    public getIndexes(resultPerColumn: boolean = false): number[][] {
         let result: number[][] = [];
-        let rowIndex: number = 0;
-        let bit: boolean = false;
-        while (rowIndex < this.rowCount) {
-            const rowIndexes: number[] = [];
-            let colIndex: number = 0;
-            while (colIndex < this.colCount) {
-                bit = this.get(rowIndex, colIndex);
-                if (bit) {
-                    rowIndexes.push(colIndex);
-                }
-                colIndex++;
+        let index: number = 0;
+        if (resultPerColumn) {
+            while (index < this.rowCount) {
+                result.push(this.getColIndexes(index));
+                index++;
             }
-            result.push(rowIndexes);
-            rowIndex++;
+        } else {
+            while (index < this.rowCount) {
+                result.push(this.getRowIndexes(index));
+                index++;
+            }
         }
         return result;
     }
@@ -85,6 +88,14 @@ export class BitMatrix implements IBitMatrix {
                     }
                 });
             });
+        return this;
+    }
+
+    public setBuffer(newBuffer: Uint32Array): IBitMatrix {
+        if (!newBuffer || newBuffer.length !== this.buffer.length) {
+            throw new Error(`Invalid buffer ${newBuffer}`);
+        }
+        this.buffer = newBuffer;
         return this;
     }
 

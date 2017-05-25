@@ -47,4 +47,27 @@ describe("DirectedAdjacencyMatrixGraph", function () {
         expect(graph.indegree("a")).toEqual([]);
         expect(graph.outdegree("b")).toEqual([]);
     });
+    describe("topologicalSort", function () {
+        it("topologicalSort", function () {
+            const graph = new DirectedAdjacencyMatrixGraph();
+            graph.addNode("5");
+            graph.addNode("7");
+            graph.addNode("3");
+            graph.addNode("11");
+            graph.addNode("8");
+            graph.addNode("2");
+            graph.addNode("9");
+            graph.addNode("10");
+            graph.addEdge("5", "11");
+            graph.addEdge("7", "11");
+            graph.addEdge("7", "8");
+            graph.addEdge("3", "8");
+            graph.addEdge("3", "10");
+            graph.addEdge("11", "2");
+            graph.addEdge("11", "9");
+            graph.addEdge("11", "10");
+            graph.addEdge("8", "9");
+            expect(graph.topologicalSort()).toEqual(["5", "7", "3", "11", "8", "2", "10", "9"]);
+        });
+    });
 });

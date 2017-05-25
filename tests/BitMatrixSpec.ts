@@ -24,22 +24,42 @@ describe("BitMatrix", function () {
         expect(bm.count()).toEqual(1);
     });
 
-    it("be able to get set bits count", function () {
+    it("be able to get set bits per row", function () {
         const bm = new BitMatrix(100, 100);
-        bm.set(1, 1, true);
-        bm.set(99, 99, true);
+        bm.set(1, 2, true);
+        bm.set(99, 3, true);
         expect(bm.getIndexes()[0]).toEqual([]);
-        expect(bm.getIndexes()[1]).toEqual([1]);
-        expect(bm.getIndexes()[99]).toEqual([99]);
-        bm.set(29, 29, true);
+        expect(bm.getIndexes()[1]).toEqual([2]);
+        expect(bm.getIndexes()[99]).toEqual([3]);
+        bm.set(29, 4, true);
         expect(bm.getIndexes()[0]).toEqual([]);
-        expect(bm.getIndexes()[1]).toEqual([1]);
-        expect(bm.getIndexes()[29]).toEqual([29]);
-        expect(bm.getIndexes()[99]).toEqual([99]);
-        bm.set(29, 29, false);
+        expect(bm.getIndexes()[1]).toEqual([2]);
+        expect(bm.getIndexes()[29]).toEqual([4]);
+        expect(bm.getIndexes()[99]).toEqual([3]);
+        bm.set(29, 4, false);
         expect(bm.getIndexes()[0]).toEqual([]);
-        expect(bm.getIndexes()[1]).toEqual([1]);
-        expect(bm.getIndexes()[99]).toEqual([99]);
+        expect(bm.getIndexes()[1]).toEqual([2]);
+        expect(bm.getIndexes()[29]).toEqual([]);
+        expect(bm.getIndexes()[99]).toEqual([3]);
+    });
+
+    it("be able to get set bits per column", function () {
+        const bm = new BitMatrix(100, 100);
+        bm.set(2, 1, true);
+        bm.set(3, 99, true);
+        expect(bm.getIndexes(true)[0]).toEqual([]);
+        expect(bm.getIndexes(true)[1]).toEqual([2]);
+        expect(bm.getIndexes(true)[99]).toEqual([3]);
+        bm.set(4, 29, true);
+        expect(bm.getIndexes(true)[0]).toEqual([]);
+        expect(bm.getIndexes(true)[1]).toEqual([2]);
+        expect(bm.getIndexes(true)[29]).toEqual([4]);
+        expect(bm.getIndexes(true)[99]).toEqual([3]);
+        bm.set(4, 29, false);
+        expect(bm.getIndexes(true)[0]).toEqual([]);
+        expect(bm.getIndexes(true)[1]).toEqual([2]);
+        expect(bm.getIndexes(true)[29]).toEqual([]);
+        expect(bm.getIndexes(true)[99]).toEqual([3]);
     });
 
     it("should throw error if trying to set bit out of bounds", function () {
