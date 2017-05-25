@@ -22,6 +22,28 @@ export class BitMatrix implements IBitMatrix {
         return !! (this.buffer[chunkOffset] & (1 << bitOffset));
     }
 
+    public getColIndexes(column: number): number[] {
+        const output: number[] = [];
+        for (let i = 0; i < this.rowCount; i++) {
+            if (this.get(i, column)) {
+                output.push(i);
+            }
+        }
+
+        return output;
+    }
+
+    public getRowIndexes(row: number): number[] {
+        const output: number[] = [];
+        for (let i = 0; i < this.colCount; i++) {
+            if (this.get(row, i)) {
+                output.push(i);
+            }
+        }
+
+        return output;
+    }
+
     public getIndexes(): number[][] {
         let result: number[][] = [];
         let rowIndex: number = 0;

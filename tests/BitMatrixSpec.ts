@@ -241,4 +241,36 @@ describe("BitMatrix", function () {
             expect(() => bm.spliceRow(-101, 2)).toThrowError();
         });
     });
+
+    it("getColIndexes should return set indexes for column", function () {
+        const bs = new BitMatrix(100, 70);
+        bs.set(1, 1, true);
+        bs.set(2, 1, true);
+        bs.set(5, 1, true);
+        bs.set(6, 1, true);
+        bs.set(99, 1,  true);
+        bs.set(6, 31, true);
+        bs.set(31, 31,  true);
+        bs.set(6, 32, true);
+        bs.set(32, 32,  true);
+        expect(bs.getColIndexes(1)).toEqual([1, 2, 5, 6, 99]);
+        expect(bs.getColIndexes(31)).toEqual([6, 31]);
+        expect(bs.getColIndexes(32)).toEqual([6, 32]);
+    });
+
+    it("getRowIndexes should return set indexes for column", function () {
+        const bs = new BitMatrix(70, 100);
+        bs.set(1, 1, true);
+        bs.set(1, 2, true);
+        bs.set(1, 5, true);
+        bs.set(1, 6, true);
+        bs.set(1, 99,  true);
+        bs.set(31, 6, true);
+        bs.set(31, 31, true);
+        bs.set(32, 6, true);
+        bs.set(32, 32, true);
+        expect(bs.getRowIndexes(1)).toEqual([1, 2, 5, 6, 99]);
+        expect(bs.getRowIndexes(31)).toEqual([6, 31]);
+        expect(bs.getRowIndexes(32)).toEqual([6, 32]);
+    });
 });
