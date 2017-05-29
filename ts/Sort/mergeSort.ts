@@ -1,7 +1,10 @@
 function mergeSort (array: number[], reverse = false, startIndex?: number, endIndex?: number) {
+    if (!Array.isArray(array)) {
+        return array;
+    }
     startIndex = startIndex === void 0 ? 0 : startIndex;
     endIndex = endIndex === void 0 ? array.length : endIndex;
-    if (!array || array.length < 2 || endIndex - startIndex < 2) {
+    if (array.length < 2 || endIndex - startIndex < 2) {
         return array;
     }
     const middleIndex: number = startIndex + Math.floor((endIndex - startIndex) / 2);
