@@ -6,7 +6,7 @@ function gnomeSort<T>(array: T[], comparator: (a: T, b: T) => boolean = (a, b) =
     let position: number = 0;
     let length: number = array.length;
     let temp: T = null;
-    while(position < length) {
+    while (position < length) {
         if (position === 0 || !comparator(array[position - 1], array[position])) {
             position++;
         } else {
