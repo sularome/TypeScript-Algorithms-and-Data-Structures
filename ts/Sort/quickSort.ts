@@ -1,5 +1,6 @@
 import SortingComparator from "../CustomTypes/SortingComparator";
 import {Utils} from "../Utils";
+import insertionSort from "./insertionSort";
 function quickSort<T>(array: T[], comparator: SortingComparator<T> = Utils.gt, leftIndex: number = 0, rightIndex: number = -1): T[] {
     if (!Array.isArray(array) || array.length < 2) {
         return array;
@@ -10,6 +11,10 @@ function quickSort<T>(array: T[], comparator: SortingComparator<T> = Utils.gt, l
     }
     if (leftIndex >= rightIndex) {
         return array;
+    }
+
+    if (leftIndex > rightIndex - 10) {
+        return insertionSort(array, comparator, leftIndex, rightIndex + 1);
     }
 
     const pivot: number = partition(array, comparator, leftIndex, rightIndex);

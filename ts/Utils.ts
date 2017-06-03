@@ -17,6 +17,10 @@ export class Utils {
         array[to] = temp;
     }
 
+    public static lt <T>(a: T, b: T): boolean {
+        return a < b
+    }
+
     public static gt <T>(a: T, b: T): boolean {
         return a > b
     }
