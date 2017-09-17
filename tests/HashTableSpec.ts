@@ -3,12 +3,14 @@ describe(`HashTable`, function () {
     it(`should be able to put elements and retrieve them`, function () {
         const table = new HashTable<number, number>(5, (key) => key);
         table.put(1, 3);
+        expect(table.size()).toEqual(1);
         table.put(2, 10);
+        expect(table.size()).toEqual(2);
         expect(table.get(1)).toEqual(3);
         expect(table.get(2)).toEqual(10);
     });
 
-    it(`should be able to retrieve elements with colisions`, function () {
+    it(`should be able to rcloneetrieve elements with colisions`, function () {
         const table = new HashTable<number, number>(5, (key) => 3);
         table.put(1, 3);
         table.put(2, 10);
@@ -104,6 +106,50 @@ describe(`HashTable`, function () {
                 table.put(2, 10);
                 expect(table.containsValue(3)).toEqual(true);
                 expect(table.containsValue(10)).toEqual(true);
+            });
+        });
+
+        describe(`clone`, function () {
+            it(`will return a shallow copy of the hashtable`, function () {
+                const table = new HashTable<number, number>(5, (key) => key);
+                table.put(1, 3);
+                table.put(2, 10);
+
+                const clone = table.clone();
+                expect(clone.elements()).toEqual(table.elements());
+            });
+        });
+
+        describe(`remove`, function () {
+            it(`will remove the key and its value from the hashtable`, function () {
+                const table = new HashTable<number, number>(5, (key) => key);
+                table.put(1, 3);
+                expect(table.size()).toEqual(1);
+                table.remove(1);
+                expect(table.size()).toEqual(0);
+            });
+            it(`will remove the key and its value from the hashtable even if we have collision`, function () {
+                const table = new HashTable<number, number>(5, (key) => key);
+                table.put(1, 3);
+                table.put(6, 4);
+                expect(table.size()).toEqual(2);
+                table.remove(1);
+                expect(table.size()).toEqual(1);
+            });
+            it(`will do nothing if element not found`, function () {
+                const table = new HashTable<number, number>(5, (key) => key);
+                table.put(1, 3);
+                table.put(6, 4);
+                expect(table.size()).toEqual(2);
+                table.remove(3);
+                expect(table.size()).toEqual(2);
+            });
+            it(`will return the element that was removed`, function () {
+                const table = new HashTable<number, number>(5, (key) => key);
+                table.put(1, 3);
+                table.put(6, 4);
+                expect(table.remove(1)).toEqual(3);
+                expect(table.remove(6)).toEqual(4);
             });
         });
     });

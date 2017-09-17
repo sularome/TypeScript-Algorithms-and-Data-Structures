@@ -35,4 +35,16 @@ export class Utils {
         }
         return lowestIndex;
     }
+
+    public static findIndexBy <T>(array: T[], comparator: (el: T, index?: number, array?: T[]) => boolean) {
+        let lowestIndex: number = -1;
+        array.some((entry, index) => {
+            if (comparator(entry, index, array)) {
+                lowestIndex = index;
+                return true;
+            }
+            return false;
+        });
+        return lowestIndex;
+    }
 }

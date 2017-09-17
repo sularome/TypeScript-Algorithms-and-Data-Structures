@@ -1,5 +1,6 @@
 import {IHashTable} from "./Interfaces/IHashTable";
 import {IKeyValuePair} from "./Interfaces/IKeyValuePair";
+import {Utils} from "./Utils";
 export class HashTable<K, V> implements IHashTable<K, V> {
     private capacity: number = 0;
     private buckets: IKeyValuePair<K, V>[][] = [];
@@ -21,26 +22,36 @@ export class HashTable<K, V> implements IHashTable<K, V> {
         }
     }
 
+    public clone(): IHashTable<K, V> {
+        const copy: IHashTable<K, V> = new HashTable<K, V>(this.capacity, this.hash);
+        copy.putAll(this.elements());
+        return copy;
+    }
+
     public contains(value: V): boolean {
         return this.buckets.some(bucket => bucket.some(entry => this.equalValue(entry.value, value)));
     }
 
     public containsKey(key: K): boolean {
-        const index: number = this.getIndex(key);
-        if (this.buckets[index].length === 0) {
+        const bucket: IKeyValuePair<K, V>[] = this.getBucket(key);
+        if (bucket.length === 0) {
             return false;
         }
-        return this.buckets[index].some(entry => this.equalKey(entry.key, key));
+        return bucket.some(entry => this.equalKey(entry.key, key));
     }
 
     public containsValue(value: V): boolean {
         return this.buckets.some(bucket => bucket.some(entry => this.equalValue(entry.value, value)));
     }
 
+    public elements(): IKeyValuePair<K, V>[] {
+        return this.buckets.reduce((pv, cv) => pv.concat(cv), [ ]);
+    }
+
     public get(key: K): V {
-        const index: number = this.getIndex(key);
+        const bucket: IKeyValuePair<K, V>[] = this.getBucket(key);
         let value: V = null;
-        this.buckets[index].some(entry => {
+        bucket.some(entry => {
             if (this.equalKey(entry.key, key)) {
                 value = entry.value;
                 return true;
@@ -51,16 +62,38 @@ export class HashTable<K, V> implements IHashTable<K, V> {
     }
 
     public put(key: K, value: V) {
-        const index: number = this.getIndex(key);
-        this.buckets[index].push({key: key, value: value});
+        const bucket: IKeyValuePair<K, V>[] = this.getBucket(key);
+        bucket.push({key: key, value: value});
     }
 
-    private getIndex(key: K): number {
+    public putAll(elements: IKeyValuePair<K, V>[]) {
+        elements.forEach(el => this.put(el.key, el.value));
+    }
+
+    public remove(key: K): V {
+        const bucket: IKeyValuePair<K, V>[] = this.getBucket(key);
+        const keyIndex: number = Utils.findIndexBy(bucket, (el) => this.equalKey(el.key, key));
+        if (keyIndex === -1) {
+            return null;
+        } else {
+            return bucket.splice(keyIndex, 1)[0].value;
+        }
+    }
+
+    public size(): number {
+        return this.buckets.reduce((total, bucket) => total + bucket.length, 0);
+    }
+
+    public values(): V[] {
+        return this.elements().map(e => e.value);
+    }
+
+    private getBucket(key: K): IKeyValuePair<K, V>[] {
         let index = this.hash(key);
         if (index < 0) {
             index = Math.abs(index);
         }
-        return index < this.buckets.length ? index : index % this.buckets.length;
+        return this.buckets[index < this.buckets.length ? index : index % this.buckets.length];
     }
 }
 
