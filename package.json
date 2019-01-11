@@ -1,5 +1,5 @@
 {
-  "name": "JavaScript-Algorithms",
+  "name": "javascript-algorithms",
   "version": "0.0.1",
   "description": "",
   "main": "main.js",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/sularome/JavaScript-Algorithms",
   "devDependencies": {
-    "@types/jasmine": "^3.3.5",
+    "@types/jasmine": "3.3.5",
     "jasmine": "3.3.1",
     "jasmine-core": "3.3.0",
     "karma": "3.1.4",

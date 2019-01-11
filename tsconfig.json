@@ -5,7 +5,8 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "build/",
-    "sourceMap": false
+    "sourceMap": false,
+    "types": ["jasmine"]
   },
   "exclude": [
     "node_modules",
