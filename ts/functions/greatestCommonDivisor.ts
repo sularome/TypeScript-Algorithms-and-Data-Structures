@@ -4,11 +4,21 @@
  * @param {number} b greater than 0
  */
 export function greatestCommonDivisor(a: number, b: number): number {
+    if (Math.round(a) !== a || Math.round(b) !== b) {
+        return NaN;
+    }
     if (a < 0 || b < 0 || a + b === 0) {
         return NaN;
     }
-    if (a < b) {
-        return greatestCommonDivisor(b, a);
+    if (a === b) {
+        return a;
+    } else if (a < b) {
+        return greatestCommonDivisorInternal(b, a);
+    } else {
+        return  greatestCommonDivisorInternal(a, b);
     }
+}
+
+function greatestCommonDivisorInternal(a: number, b: number): number {
     return  b > 0 ? greatestCommonDivisor(b , a % b) : a;
 }

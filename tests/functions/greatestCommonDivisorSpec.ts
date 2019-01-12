@@ -25,4 +25,16 @@ describe("greatestCommonDivisor", () => {
     it("should return first parameter if second is 0", () => {
         expect(greatestCommonDivisor(0, 4)).toEqual(4);
     });
+    it("should return NaN if first parameter is not an integer", () => {
+        expect(greatestCommonDivisor(1.3, 4)).toBeNaN();
+    });
+    it("should return NaN if second parameter is not an integer", () => {
+        expect(greatestCommonDivisor(1, 4.1)).toBeNaN();
+    });
+    it("should return NaN if both parameters are not an integer", () => {
+        expect(greatestCommonDivisor(1.1, 4.1)).toBeNaN();
+    });
+    it("should return first number if they are equal", () => {
+        expect(greatestCommonDivisor(5, 5)).toEqual(5);
+    });
 });
