@@ -9,9 +9,13 @@ export function extendedEuclidesAlgorithm(a: number, b: number): IExtendedEuclid
     if (Math.round(a) !== a || Math.round(b) !== b) {
         throw new Error("Euclide's extended algorithm works only for positive integers");
     }
-    if (a < 0 || b < 0 || a + b === 0) {
+    if (a === 0 && b === 0) {
         throw new Error("Euclide's extended algorithm works only for positive integers");
     }
+    const aSign = a < 0 ? -1 : 1;
+    const bSign = b < 0 ? -1 : 1;
+    a = Math.abs(a);
+    b = Math.abs(b);
     if (a === b) {
         return {
             gcd: a,
@@ -22,11 +26,16 @@ export function extendedEuclidesAlgorithm(a: number, b: number): IExtendedEuclid
         const result = extendedEuclidesAlgorithmInternal(b, a);
         return {
             gcd: result.gcd,
-            x: result.y,
-            y: result.x
+            x: result.y * aSign,
+            y: result.x * bSign
         }
     } else {
-        return  extendedEuclidesAlgorithmInternal(a, b);
+        const result = extendedEuclidesAlgorithmInternal(a, b);
+        return {
+            gcd: result.gcd,
+            x: result.x * aSign,
+            y: result.y * bSign
+        }
     }
 }
 

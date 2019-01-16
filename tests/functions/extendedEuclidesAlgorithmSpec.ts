@@ -10,12 +10,6 @@ describe("extendedEuclidesAlgorithm", () => {
     it("should return first if it is multiple of second", () => {
         expect(extendedEuclidesAlgorithm(15, 35).gcd).toEqual(5);
     });
-    it("should throw error if first parameter is less than 0", () => {
-        expect(() => extendedEuclidesAlgorithm(-15, 35)).toThrow();
-    });
-    it("should throw error if second parameter is less than 0", () => {
-        expect(() => extendedEuclidesAlgorithm(15, -35)).toThrow();
-    });
     it("should throw error if both parameters are 0", () => {
         expect(() => extendedEuclidesAlgorithm(0, 0)).toThrow();
     });
@@ -58,11 +52,32 @@ describe("extendedEuclidesAlgorithm", () => {
             y: 0
         });
     });
-    it("should calculate proper gcd components when numbers have common divisor grerater than 1", () => {
+    it("should calculate proper gcd components when numbers have common divisor greater than 1", () => {
         expect(extendedEuclidesAlgorithm(10, 6)).toEqual({
             gcd: 2,
             x: -1,
             y: 2
+        });
+    });
+    it("should calculate proper gcd components when first number is less than 0", () => {
+        expect(extendedEuclidesAlgorithm(-10, 6)).toEqual({
+            gcd: 2,
+            x: 1,
+            y: 2
+        });
+    });
+    it("should calculate proper gcd components when second number is less than 0", () => {
+        expect(extendedEuclidesAlgorithm(10, -6)).toEqual({
+            gcd: 2,
+            x: -1,
+            y: -2
+        });
+    });
+    it("should calculate proper gcd components when both numbers are less than 0", () => {
+        expect(extendedEuclidesAlgorithm(-10, -6)).toEqual({
+            gcd: 2,
+            x: 1,
+            y: -2
         });
     });
     it("should calculate proper gcd components when numbers have common divisor equal to 1", () => {
