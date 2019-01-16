@@ -10,11 +10,14 @@ describe("greatestCommonDivisor", () => {
     it("should return first if it is multiple of second", () => {
         expect(greatestCommonDivisor(15, 35)).toEqual(5);
     });
-    it("should return NaN if first parameter is less than 0", () => {
-        expect(greatestCommonDivisor(-15, 35)).toBeNaN();
+    it("should work if first parameter is negative numbers", () => {
+        expect(greatestCommonDivisor(-15, 35)).toEqual(5);
     });
-    it("should return NaN if second parameter is less than 0", () => {
-        expect(greatestCommonDivisor(15, -35)).toBeNaN();
+    it("should work if second parameter is less than 0", () => {
+        expect(greatestCommonDivisor(15, -35)).toEqual(5);
+    });
+    it("should work if both parameter are less than 0", () => {
+        expect(greatestCommonDivisor(-15, -35)).toEqual(5);
     });
     it("should return NaN if both parameters are 0", () => {
         expect(greatestCommonDivisor(0, 0)).toBeNaN();

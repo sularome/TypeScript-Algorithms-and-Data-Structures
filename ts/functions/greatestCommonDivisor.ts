@@ -7,8 +7,14 @@ export function greatestCommonDivisor(a: number, b: number): number {
     if (Math.round(a) !== a || Math.round(b) !== b) {
         return NaN;
     }
-    if (a < 0 || b < 0 || a + b === 0) {
+    if (a === 0 && b === 0) {
         return NaN;
+    }
+    if (a < 0) {
+        a = Math.abs(a);
+    }
+    if (b < 0) {
+        b = Math.abs(b);
     }
     if (a === b) {
         return a;
