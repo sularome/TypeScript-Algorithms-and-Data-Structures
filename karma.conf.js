@@ -2,10 +2,6 @@ module.exports = function(config) {
   var configuration = {
     basePath: '',
     customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
     },
     coverageReporter: {
         type : 'lcovonly',
@@ -25,7 +21,7 @@ module.exports = function(config) {
         'karma-coverage',
         'karma-requirejs',
         'karma-jasmine',
-        'karma-chrome-launcher'
+        'karma-jsdom-launcher'
     ],
     preprocessors: {
         './build/**/*.js': 'coverage'
@@ -35,14 +31,10 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_ERROR,
     autoWatch: false,
-    browsers: ['Chrome'],
+    browsers: ['jsdom'],
     singleRun: true,
     concurrency: Infinity
   };
-
-  if (process.env.TRAVIS) {
-    configuration.browsers = ['Chrome_travis_ci'];
-  }
 
   if (process.argv.indexOf('-w') >= 0) {
     configuration.singleRun = false;
