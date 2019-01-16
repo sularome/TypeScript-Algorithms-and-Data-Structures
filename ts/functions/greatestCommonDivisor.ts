@@ -4,7 +4,7 @@
  * @param {number} b greater than 0
  */
 export function greatestCommonDivisor(a: number, b: number): number {
-    if (Math.round(a) !== a || Math.round(b) !== b) {
+    if (!Number.isInteger(a) || !Number.isInteger(b)) {
         return NaN;
     }
     if (a === 0 && b === 0) {

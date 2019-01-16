@@ -6,7 +6,7 @@ import { IExtendedEuclidesAlgorithmResult } from "../Interfaces/IExtendedEuclide
  * @param {number} b greater than 0
  */
 export function extendedEuclidesAlgorithm(a: number, b: number): IExtendedEuclidesAlgorithmResult {
-    if (Math.round(a) !== a || Math.round(b) !== b) {
+    if (!Number.isInteger(a) || !Number.isInteger(b)) {
         throw new Error("Euclide's extended algorithm works only for positive integers");
     }
     if (a === 0 && b === 0) {
