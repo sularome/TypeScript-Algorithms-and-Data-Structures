@@ -20,7 +20,7 @@ import functions from "./functions/index";
 import Graph from "./Graph/index";
 import Sort from "./Sort/index";
 
-export default {
+const tad = {
     BitArray,
     BitMatrix,
     FindMaximumSubarray,
@@ -43,3 +43,4 @@ export default {
     Graph,
     Sort
 };
+export default tad;
