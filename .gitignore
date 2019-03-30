@@ -40,5 +40,5 @@ jspm_packages
 
 # Webstorm
 .idea
-build/
+dist/
 typings/

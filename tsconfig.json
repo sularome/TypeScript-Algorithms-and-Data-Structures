@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
-    "module": "amd",
+    "module": "UMD",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outDir": "build/",
-    "sourceMap": false,
-    "types": ["jasmine"],
+    "outDir": "dist/",
+    "sourceMap": true,
+    "declaration": true,
+    "types": ["jest"],
     "target": "ES2017",
   },
   "exclude": [
     "node_modules",
-    "wwwroot"
+    "wwwroot",
+    "dist",
+    "tests"
   ]
 }

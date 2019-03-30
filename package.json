@@ -2,9 +2,14 @@
   "name": "javascript-algorithms",
   "version": "0.0.1",
   "description": "",
-  "main": "main.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "tsc && karma start"
+    "ci": "npm run test",
+    "clear": "npx rimraf dist",
+    "test": "npx jest --config jestconfig.json",
+    "build": "npm run clear && npx tsc",
+    "lint": "npx tslint"
   },
   "repository": {
     "type": "git",
@@ -17,17 +22,11 @@
   },
   "homepage": "https://github.com/sularome/JavaScript-Algorithms",
   "devDependencies": {
-    "@types/jasmine": "3.3.5",
-    "jasmine": "3.3.1",
-    "jasmine-core": "3.3.0",
-    "jsdom": "^13.1.0",
-    "karma": "^3.1.4",
-    "karma-chrome-launcher": "2.2.0",
-    "karma-coverage": "1.1.2",
-    "karma-jasmine": "2.0.1",
-    "karma-jsdom-launcher": "^7.0.0",
-    "karma-requirejs": "1.1.0",
-    "requirejs": "2.3.6",
+    "@types/jest": "^24.0.11",
+    "jest": "^24.5.0",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.1",
+    "tslint": "^5.14.0",
     "typescript": "3.2.2"
   }
 }
