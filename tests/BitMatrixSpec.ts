@@ -293,4 +293,22 @@ describe("BitMatrix", function () {
         expect(bs.getRowIndexes(31)).toEqual([6, 31]);
         expect(bs.getRowIndexes(32)).toEqual([6, 32]);
     });
+    it("be able to get set bits per column when column count < row count", function () {
+        const bm = new BitMatrix(100, 10);
+        bm.set(2, 1, true);
+        bm.set(3, 9, true);
+        expect(bm.getIndexes(true)[0]).toEqual([]);
+        expect(bm.getIndexes(true)[1]).toEqual([2]);
+        expect(bm.getIndexes(true)[9]).toEqual([3]);
+        bm.set(4, 8, true);
+        expect(bm.getIndexes(true)[0]).toEqual([]);
+        expect(bm.getIndexes(true)[1]).toEqual([2]);
+        expect(bm.getIndexes(true)[8]).toEqual([4]);
+        expect(bm.getIndexes(true)[9]).toEqual([3]);
+        bm.set(4, 8, false);
+        expect(bm.getIndexes(true)[0]).toEqual([]);
+        expect(bm.getIndexes(true)[1]).toEqual([2]);
+        expect(bm.getIndexes(true)[8]).toEqual([]);
+        expect(bm.getIndexes(true)[9]).toEqual([3]);
+    });
 });

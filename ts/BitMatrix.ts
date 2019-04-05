@@ -54,7 +54,7 @@ export class BitMatrix implements IBitMatrix {
         let result: number[][] = [];
         let index: number = 0;
         if (resultPerColumn) {
-            while (index < this.rowCount) {
+            while (index < this.colCount) {
                 result.push(this.getColIndexes(index));
                 index++;
             }
@@ -180,11 +180,11 @@ export class BitMatrix implements IBitMatrix {
     }
 
     private validateIndex(rowIndex: number, colIndex: number) {
-        if (rowIndex > this.rowCount - 1 || rowIndex < 0) {
-            throw new RangeError("Row index is incorrect.");
+        if (rowIndex >= this.rowCount || rowIndex < 0) {
+            throw new RangeError(`Row index is incorrect. Maximum allowed index: ${this.rowCount - 1}. Actual index ${rowIndex}`);
         }
-        if (colIndex > this.colCount - 1 || colIndex < 0) {
-            throw new RangeError("Column index is incorrect.");
+        if (colIndex >= this.colCount || colIndex < 0) {
+            throw new RangeError(`Column index is incorrect. Maximum allowed index: ${this.colCount - 1}. Actual index ${colIndex}`);
         }
     }
 }
