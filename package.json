@@ -7,6 +7,7 @@
   "files": [
     "dist/**/*"
   ],
+  "keywords": ["TypeScript", "Data Structure", "Algorithm", "BitArray", "Trie", "RadixTrie"],
   "scripts": {
     "ci": "npm run test",
     "clear": "npx rimraf dist",
