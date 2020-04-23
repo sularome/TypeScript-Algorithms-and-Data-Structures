@@ -8,7 +8,8 @@
     "sourceMap": true,
     "declaration": true,
     "types": ["jest"],
-    "target": "ES2017"
+    "target": "ES2017",
+    "moduleResolution": "node"
   },
   "exclude": [
     "node_modules",
